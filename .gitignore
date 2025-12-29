@@ -2,6 +2,14 @@
 
 models.yaml
 test/*
+app/config.py
+
+# vsCode
+.vscode/
+
+# Github
+.github
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

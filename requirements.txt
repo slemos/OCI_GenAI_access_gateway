@@ -11,3 +11,5 @@ openai==1.104.2
 sseclient-py
 pyyaml
 gunicorn>=23.0.0
+oci-ai-speech-realtime
+python-multipart

@@ -1,6 +1,6 @@
 from typing import Annotated, Union
 
-from fastapi import APIRouter, Depends, Body, Request
+from fastapi import APIRouter, Depends, Body, Request, HTTPException
 from fastapi.responses import StreamingResponse
 
 from api.auth import api_key_auth
@@ -40,26 +40,27 @@ async def chat_completions(
 ):
     try:
         model_type = SUPPORTED_OCIGENAI_CHAT_MODELS[chat_request.model]["type"]
-    except:
-        raise HTTPException(status_code=400, detail="Unsupported model")
-    
-    # except:
-    #     model_type = SUPPORTED_OCIODSC_CHAT_MODELS[chat_request.model]["type"]
-    # Exception will be raised if model not supported.
+        # except:
+        #     model_type = SUPPORTED_OCIODSC_CHAT_MODELS[chat_request.model]["type"]
+        # Exception will be raised if model not supported.
 
-    # if model_type == "datascience":
-    #     model = OCIOdscModel()  # Data Science models
-    # GenAI service ondemand models
-    if model_type == "ondemand":
+        # if model_type == "datascience":
+        #     model = OCIOdscModel()  # Data Science models
+        # GenAI service ondemand models
         model = OCIGenAIModel() 
-    # GenAI service dedicated models
-    elif model_type == "dedicated":
-        model = OCIGenAIModel()  
+        # if model_type == "ondemand":
+        #     model = OCIGenAIModel() 
+        # # GenAI service dedicated models
+        # elif model_type == "dedicated":
+        #     model = OCIGenAIModel()   
 
-    model.validate(chat_request)
+        model.validate(chat_request)
 
-    if chat_request.stream:
-        return StreamingResponse(
-            content=model.chat_stream(chat_request), media_type="text/event-stream"
-        )
-    return model.chat(chat_request)
+        if chat_request.stream:
+            return StreamingResponse(
+                content=model.chat_stream(chat_request), media_type="text/event-stream"
+            )
+        return model.chat(chat_request)
+    except:
+        raise HTTPException(status_code=400, detail="Unsupported model") from Exception
+

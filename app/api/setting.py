@@ -57,7 +57,7 @@ elif AUTH_TYPE == 'RESOURCE_PRINCIPAL':
     
 CLIENT_KWARGS.update({'config': OCI_CONFIG})
 CLIENT_KWARGS.update({'signer': signer})
-CLIENT_KWARGS.update({'region': config.REGION})
+CLIENT_KWARGS.update({'region': config.OCI_REGION})
 
 INFERENCE_ENDPOINT_TEMPLATE = "https://inference.generativeai.{region}.oci.oraclecloud.com/20231130"
 INFERENCE_ENDPOINT_TEMPLATE_OPENAI = "https://inference.generativeai.{region}.oci.oraclecloud.com/20231130/actions/v1/chat/completions"
@@ -66,7 +66,7 @@ INFERENCE_ENDPOINT_TEMPLATE_OPENAI = "https://inference.generativeai.{region}.oc
 EMBED_TRUNCATE = os.environ.get("EMBED_TRUNCATE", "END")
 
 
-OCI_REGION = os.environ.get("OCI_REGION", config.REGION)
+OCI_REGION = os.environ.get("OCI_REGION", config.OCI_REGION)
 OCI_COMPARTMENT = os.environ.get("OCI_COMPARTMENT", config.OCI_COMPARTMENT)
 
 # If env is setting, infos will get from API
